@@ -1,20 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './index.css';
-import App from './App';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { ReactQueryProvider } from "./providers/react-query/provider";
+import { WeatherDashboard, CityDashboard } from "./pages";
 
-const root = ReactDOM.createRoot(
-	document.getElementById('root') as HTMLElement,
-);
+import './styles.css';
 
-root.render(
-	<React.StrictMode>
-		<Router>
-			<Routes>
-				<Route path="/" element={<App />} />
-				<Route path="/login" element={<div>Login</div>} />
-			</Routes>
-		</Router>
-	</React.StrictMode>,
-);
+export const App = () => {
+	const root = ReactDOM.createRoot(
+		document.getElementById("root") as HTMLElement,
+	);
+
+	root.render(
+		<ReactQueryProvider>
+			<Router>
+				<Routes>
+					<Route path="/" element={
+						<div>
+							<Link to="/weather">Wheather</Link>
+							<Link to="/city">City</Link>
+						</div>
+						 } />
+					<Route path="/weather" element={<WeatherDashboard />} />
+					<Route path="/city" element={<CityDashboard />} />
+					<Route path="*" element={<div>404</div>} />
+					</Routes>
+				</Router>
+		</ReactQueryProvider>,
+	);
+};
+
+App();
