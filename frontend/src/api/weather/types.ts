@@ -14,7 +14,7 @@ export type Wheather = {
 };
 
 export type WeatherProps = {
-    city?: string;
-    lat?: string;
-    lon?: string;
-}
+	city?: string;
+	lat?: string;
+	lon?: string;
+};

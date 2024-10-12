@@ -1,2 +1,2 @@
-export * from './city/City'
-export * from './weather/Weather'
+export * from "./weather/Weather";
+export * from "./NotFound/NotFound";

@@ -1,8 +1,8 @@
+import cors from "cors";
 import express from "express";
 import { env } from "./config/env";
-import { wheatherRoutes } from "./routes/wheather/routes";
 import { cityRoutes } from "./routes/city/routes";
-import cors from "cors";
+import { wheatherRoutes } from "./routes/wheather/routes";
 
 const PORT = env.PORT;
 

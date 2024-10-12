@@ -9,9 +9,15 @@ export class WheatherApiService {
 		this.client = new WheatherApiClient();
 	}
 
-	async getWheatherByParams(city: string, lat: string, lon: string): Promise<ApiResponse<Wheather>> {
+	async getWheatherByParams(
+		city: string,
+		lat: string,
+		lon: string,
+	): Promise<ApiResponse<Wheather>> {
 		try {
-			const data = city ? await this.client.getWheatherByCity(city) : await this.client.getWheatherByCoordinates(Number(lat), Number(lon));
+			const data = city
+				? await this.client.getWheatherByCity(city)
+				: await this.client.getWheatherByCoordinates(Number(lat), Number(lon));
 			const parsedWheather = this.parseWheather(data);
 			return {
 				success: true,
