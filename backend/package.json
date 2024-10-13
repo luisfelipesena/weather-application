@@ -2,7 +2,9 @@
 	"name": "backend",
 	"version": "1.0.0",
 	"scripts": {
-		"start": "ts-node-dev --respawn --transpile-only src/app.ts"
+		"start": "ts-node-dev --respawn --transpile-only src/app.ts",
+		"start:prod": "node dist/app.js",
+		"build": "tsc -p tsconfig.json"
 	},
 	"keywords": [],
 	"author": "Luis Felipe",
