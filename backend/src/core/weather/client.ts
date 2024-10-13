@@ -6,7 +6,7 @@ export class WeatherApiClient {
 
 	async getWeatherByCity(city: string): Promise<WeatherDto> {
 		const response = await fetch(
-			`http://api.weatherapi.com/v1/current.json?key=${this.apiKey}&q=${city}`,
+			`http://api.weatherapi.com/v1/current.json?key=${this.apiKey}&q=${city.trim()}`,
 		);
 		const data = (await response.json()) as WeatherDto;
 		return data;
