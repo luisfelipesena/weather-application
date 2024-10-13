@@ -1,9 +1,8 @@
-import { MapPin } from "lucide-react";
-import { Button } from "../../ui/button";
 import { AutocompleteInput } from "../../ui/autocomplete-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useCity } from "../../../api/city/hook";
+import { toast } from "react-toastify";
 
 interface City {
 	name: string;
@@ -11,40 +10,38 @@ interface City {
 }
 
 export interface CitySearchBarProps {
-	searchInput: string;
-	setSearchInput: (value: string) => void;
-	handleSearch: () => void;
-	handleUseLocation: () => void;
+	handleSearch: (searchInput: string) => void;
 }
 
 export const CitySearchBar: React.FC<CitySearchBarProps> = ({
-	searchInput,
-	setSearchInput,
 	handleSearch,
-	handleUseLocation,
 }) => {
-	const [input, setInput] = useState(searchInput);
+	const [input, setInput] = useState("");
 
 	const debouncedInput = useDebounce(input, 300);
-	const { data: cities, isLoading } = useCity(debouncedInput);
+	const { data: cities, isLoading, error } = useCity(debouncedInput);
 
 	const handleInputChange = (value: string) => {
 		setInput(value);
-		setSearchInput(value);
 	};
 
 	const handleSelectCity = (city: City) => {
 		setInput(`${city.name}, ${city.country}`);
-		setSearchInput(`${city.name}, ${city.country}`);
-		handleSearch();
+		handleSearch(`${city.name}, ${city.country}`);
 	};
+
+	useEffect(() => {
+		if (error) {
+			toast.error(error?.message || "Error fetching cities");
+		}
+	}, [error]);
 
 	return (
 		<div className="flex flex-col gap-4 items-center">
 			<div className="w-full max-w-96 flex gap-2">
 				<AutocompleteInput
 					value={input}
-					options={cities?.data || []}
+					options={cities || []}
 					onSelect={handleSelectCity}
 					onChange={handleInputChange}
 					isLoading={isLoading}
@@ -59,13 +56,6 @@ export const CitySearchBar: React.FC<CitySearchBarProps> = ({
 					className="flex-grow"
 				/>
 			</div>
-			<Button
-				onClick={handleUseLocation}
-				variant="outline"
-				className="w-full max-w-96"
-			>
-				<MapPin className="w-4 h-4 mr-2" /> Use My Location
-			</Button>
 		</div>
 	);
 };

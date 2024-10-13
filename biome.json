@@ -27,6 +27,9 @@
 			"complexity": {
 				"noStaticOnlyClass": "off",
 				"noBannedTypes": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "off"
 			}
 		}
 	},
