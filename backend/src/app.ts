@@ -19,5 +19,5 @@ app.use(weatherRoutes);
 app.use(cityRoutes);
 
 app.listen(PORT, () => {
-	return console.log(`Express is listening at http://localhost:${PORT}`);
+	return console.log(`Express is listening at PORT: ${PORT}`);
 });
