@@ -9,11 +9,17 @@ import { WeatherSkeleton } from "../../components/Weather/WeatherSkeleton/Weathe
 import { toast } from "react-toastify";
 import { useWeatherBackground } from "../../hooks/Weather/useWeatherBackground";
 import { useGeolocation } from "@uidotdev/usehooks";
+import { getTemperature, getSpeed, getVisibility } from "../../utils";
+import { UnitSelector } from "../../components/UnitSelector/UnitSelector";
 
 export const WeatherDashboard = () => {
 	const [city, setCity] = useState("");
 	const [lat, setLat] = useState("");
 	const [lon, setLon] = useState("");
+	const [temperatureUnit, setTemperatureUnit] = useState<
+		"celsius" | "fahrenheit"
+	>("fahrenheit");
+	const [speedUnit, setSpeedUnit] = useState<"kmh" | "mph">("mph");
 
 	const {
 		data: weather,
@@ -75,7 +81,25 @@ export const WeatherDashboard = () => {
 							</>
 						) : (
 							<div className="flex flex-col gap-6">
-								<WeatherHeading weather={weather} />
+								<WeatherHeading
+									weather={{
+										...weather,
+										temperature: Number(
+											getTemperature(
+												weather.temperature.toString(),
+												temperatureUnit,
+											),
+										),
+									}}
+									unit={temperatureUnit}
+								/>
+
+								<UnitSelector
+									temperatureUnit={temperatureUnit}
+									speedUnit={speedUnit}
+									onTemperatureUnitChange={setTemperatureUnit}
+									onSpeedUnitChange={setSpeedUnit}
+								/>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 									<WeatherInfoCard
 										icon={<Droplets className="w-6 h-6" />}
@@ -85,12 +109,15 @@ export const WeatherDashboard = () => {
 									<WeatherInfoCard
 										icon={<Wind className="w-6 h-6" />}
 										title="Wind"
-										value={`${weather.windSpeed} km/h ${weather.windDirection}`}
+										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${weather.windDirection}`}
 									/>
 									<WeatherInfoCard
 										icon={<Eye className="w-6 h-6" />}
 										title="Visibility"
-										value={`${weather.visibility} km`}
+										value={`${getVisibility(
+											weather.visibility.toString(),
+											speedUnit,
+										)} ${speedUnit === "kmh" ? "km" : "mi"}`}
 									/>
 									<WeatherInfoCard
 										icon={<Cloud className="w-6 h-6" />}

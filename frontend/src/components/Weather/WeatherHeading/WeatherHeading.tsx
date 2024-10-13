@@ -10,9 +10,10 @@ import type { Weather } from "../../../api/weather/types";
 
 interface WeatherHeadingProps {
 	weather: Weather;
+	unit: "celsius" | "fahrenheit";
 }
 
-export const WeatherHeading = ({ weather }: WeatherHeadingProps) => {
+export const WeatherHeading = ({ weather, unit }: WeatherHeadingProps) => {
 	const getWeatherIcon = (condition: string) => {
 		const lowerCondition = condition.toLowerCase();
 		if (lowerCondition.includes("clear") || lowerCondition.includes("sunny"))
@@ -43,7 +44,7 @@ export const WeatherHeading = ({ weather }: WeatherHeadingProps) => {
 				{getWeatherIcon(weather.condition)}
 				<div className="ml-4">
 					<div className="text-5xl font-bold text-gray-900">
-						{weather.temperature}°C
+						{weather.temperature}°{unit === "celsius" ? "C" : "F"}
 					</div>
 					<div className="text-xl text-gray-600">{weather.condition}</div>
 				</div>
