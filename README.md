@@ -1,14 +1,16 @@
 # Weather Dashboard Project
 
-This Weather Dashboard project is a full-stack web application that allows users to search for cities and view their current weather conditions. The application consists of two main components:
+This Weather Dashboard project is a full-stack web application that allows users to view current weather conditions either by their IP-based location or by searching for a specific city. The application consists of two main components:
 
 1. Frontend (React):
-   - City Search: Users can search for cities using an autocomplete input field.
-   - Weather Dashboard: Displays detailed weather information for the chosen city.
+   - Geolocation: Automatically detects user's location using IP-based latitude and longitude.
+   - City Search: Users can search for cities using an autocomplete input field powered by the API Ninjas API.
+   - Weather Dashboard: Displays detailed weather information for the chosen location or city.
 
 2. Backend (Node.js):
    - Serves as a proxy to fetch weather data from external APIs.
-   - Provides city autocomplete functionality.
+   - Integrates with Weather API to retrieve weather information.
+   - Provides city autocomplete functionality using API Ninjas.
 
 To facilitate visualization, the project has been deployed and can be accessed at: https://weather-dash-project.netlify.app/
 
@@ -16,7 +18,6 @@ To facilitate visualization, the project has been deployed and can be accessed a
 
 - Frontend:
   - React
-  - React Router
   - React Query
   - Tailwind CSS
 
@@ -64,9 +65,12 @@ To obtain the necessary API keys, visit:
 - Weather API: https://www.weatherapi.com/docs/
 - API Ninjas: https://api-ninjas.com/
 
+Note: This project uses free API keys for both Weather API and API Ninjas.
+
 ## Features
 
-- City search with autocomplete
-- Current weather information display
+- Automatic location detection using IP-based geolocation
+- City search with autocomplete using API Ninjas
+- Current weather information display using Weather API
 - Responsive design
 - Error handling and loading states
