@@ -1,4 +1,11 @@
-import { Cloud, Droplets, Sun } from "lucide-react";
+import {
+	Cloud,
+	Droplets,
+	Sun,
+	Snowflake,
+	CloudLightning,
+	CloudFog,
+} from "lucide-react";
 import type { Weather } from "../../../api/weather/types";
 
 interface WeatherHeadingProps {
@@ -8,12 +15,22 @@ interface WeatherHeadingProps {
 export const WeatherHeading = ({ weather }: WeatherHeadingProps) => {
 	const getWeatherIcon = (condition: string) => {
 		const lowerCondition = condition.toLowerCase();
-		if (lowerCondition.includes("sun") || lowerCondition.includes("clear"))
+		if (lowerCondition.includes("clear") || lowerCondition.includes("sunny"))
 			return <Sun className="w-24 h-24 text-yellow-400" />;
-		if (lowerCondition.includes("cloud"))
+		if (
+			lowerCondition.includes("clouds") ||
+			lowerCondition.includes("overcast") ||
+			lowerCondition.includes("partly cloudy")
+		)
 			return <Cloud className="w-24 h-24 text-gray-400" />;
 		if (lowerCondition.includes("rain"))
 			return <Droplets className="w-24 h-24 text-blue-400" />;
+		if (lowerCondition.includes("snow"))
+			return <Snowflake className="w-24 h-24 text-blue-100" />;
+		if (lowerCondition.includes("thunderstorm"))
+			return <CloudLightning className="w-24 h-24 text-purple-700" />;
+		if (lowerCondition.includes("mist"))
+			return <CloudFog className="w-24 h-24 text-gray-300" />;
 		return <Sun className="w-24 h-24 text-purple-400" />;
 	};
 
