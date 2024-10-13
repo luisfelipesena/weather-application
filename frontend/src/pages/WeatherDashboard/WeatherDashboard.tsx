@@ -8,7 +8,6 @@ import { WeatherHeading } from "../../components/Weather/WeatherHeading/WeatherH
 import { WeatherSkeleton } from "../../components/Weather/WeatherSkeleton/WeatherSkeleton";
 import { toast } from "react-toastify";
 import { useWeatherBackground } from "../../hooks/Weather/useWeatherBackground";
-import { useGeolocation } from "@uidotdev/usehooks";
 import {
 	getTemperature,
 	getVisibility,
@@ -32,6 +31,8 @@ export const WeatherDashboard = () => {
 		"distanceUnit",
 		"mi",
 	);
+	const [geolocationError, setGeolocationError] =
+		useState<GeolocationPositionError | null>(null);
 
 	const {
 		data: weather,
@@ -39,13 +40,31 @@ export const WeatherDashboard = () => {
 		error: weatherError,
 	} = useWeather({ city, lat, lon });
 	const bgColor = useWeatherBackground(weather?.condition);
-	const {
-		latitude,
-		longitude,
-		error: geolocationError,
-	} = useGeolocation({
-		enableHighAccuracy: true,
-	});
+
+	useEffect(() => {
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					setLat(position.coords.latitude.toString());
+					setLon(position.coords.longitude.toString());
+					setGeolocationError(null);
+				},
+				(error) => {
+					setGeolocationError(error);
+					setLat("");
+					setLon("");
+				},
+			);
+		} else {
+			setGeolocationError({
+				code: 0,
+				message: "Geolocation is not supported by this browser.",
+				PERMISSION_DENIED: 1,
+				POSITION_UNAVAILABLE: 2,
+				TIMEOUT: 3,
+			});
+		}
+	}, []);
 
 	const handleSearch = (searchInput: string) => {
 		setCity(searchInput);
@@ -67,13 +86,6 @@ export const WeatherDashboard = () => {
 				toast.error(geolocationError?.message || "Error fetching geolocation");
 		}
 	}, [weatherError, geolocationError]);
-
-	useEffect(() => {
-		if (latitude && longitude) {
-			setLat(latitude.toString());
-			setLon(longitude.toString());
-		}
-	}, [latitude, longitude]);
 
 	return (
 		<div
