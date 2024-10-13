@@ -1,4 +1,4 @@
-export type WheatherDto = {
+export type WeatherDto = {
 	location: {
 		name: string;
 		region: string;
@@ -46,7 +46,7 @@ export type WheatherDto = {
 	};
 };
 
-export type Wheather = {
+export type Weather = {
 	name: string;
 	region: string;
 	country: string;

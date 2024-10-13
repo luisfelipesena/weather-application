@@ -1,25 +1,22 @@
 import { env } from "../../config/env";
-import type { WheatherDto } from "./types";
+import type { WeatherDto } from "./types";
 
-export class WheatherApiClient {
+export class WeatherApiClient {
 	private readonly apiKey = env.WEATHER_API_KEY;
 
-	async getWheatherByCity(city: string): Promise<WheatherDto> {
+	async getWeatherByCity(city: string): Promise<WeatherDto> {
 		const response = await fetch(
 			`http://api.weatherapi.com/v1/current.json?key=${this.apiKey}&q=${city}`,
 		);
-		const data = (await response.json()) as WheatherDto;
+		const data = (await response.json()) as WeatherDto;
 		return data;
 	}
 
-	async getWheatherByCoordinates(
-		lat: number,
-		lon: number,
-	): Promise<WheatherDto> {
+	async getWeatherByCoordinates(lat: number, lon: number): Promise<WeatherDto> {
 		const response = await fetch(
 			`http://api.weatherapi.com/v1/current.json?key=${this.apiKey}&q=${lat},${lon}`,
 		);
-		const data = (await response.json()) as WheatherDto;
+		const data = (await response.json()) as WeatherDto;
 		return data;
 	}
 }
