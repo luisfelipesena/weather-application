@@ -16,12 +16,12 @@ export const getTemperature = (
 		: celsiusToFahrenheit(celsius);
 };
 
-export const getSpeed = (speed: string, speedUnit: "kmh" | "mph") => {
+export const getSpeed = (speed: string, speedUnit: "km" | "mi") => {
 	const kmh = Number.parseFloat(speed);
-	return speedUnit === "kmh" ? kmh.toFixed(1) : kmhToMph(kmh);
+	return speedUnit === "km" ? kmh.toFixed(1) : kmhToMph(kmh);
 };
 
-export const getVisibility = (visibility: string, speedUnit: "kmh" | "mph") => {
+export const getVisibility = (visibility: string, speedUnit: "km" | "mi") => {
 	const km = Number.parseFloat(visibility);
-	return speedUnit === "kmh" ? km.toFixed(1) : (km * 0.621371).toFixed(1);
+	return speedUnit === "km" ? km.toFixed(1) : (km * 0.621371).toFixed(1);
 };

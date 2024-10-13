@@ -19,7 +19,7 @@ export const WeatherDashboard = () => {
 	const [temperatureUnit, setTemperatureUnit] = useState<
 		"celsius" | "fahrenheit"
 	>("fahrenheit");
-	const [speedUnit, setSpeedUnit] = useState<"kmh" | "mph">("mph");
+	const [speedUnit, setSpeedUnit] = useState<"km" | "mi">("mi");
 
 	const {
 		data: weather,
@@ -109,7 +109,7 @@ export const WeatherDashboard = () => {
 									<WeatherInfoCard
 										icon={<Wind className="w-6 h-6" />}
 										title="Wind"
-										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${weather.windDirection}`}
+										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${speedUnit}/hr - Direction: ${weather.windDirection}`}
 									/>
 									<WeatherInfoCard
 										icon={<Eye className="w-6 h-6" />}
@@ -117,7 +117,7 @@ export const WeatherDashboard = () => {
 										value={`${getVisibility(
 											weather.visibility.toString(),
 											speedUnit,
-										)} ${speedUnit === "kmh" ? "km" : "mi"}`}
+										)} ${speedUnit}`}
 									/>
 									<WeatherInfoCard
 										icon={<Cloud className="w-6 h-6" />}

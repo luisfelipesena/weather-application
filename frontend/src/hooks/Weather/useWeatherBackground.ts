@@ -24,6 +24,9 @@ export const useWeatherBackground = (condition: string | undefined) => {
 				case "rain":
 					setBgColor("from-blue-400 to-gray-600");
 					break;
+				case "patchy rain nearby":
+					setBgColor("from-blue-300 to-gray-500");
+					break;
 				case "snow":
 					setBgColor("from-blue-100 to-gray-200");
 					break;
