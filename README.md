@@ -10,6 +10,8 @@ This Weather Dashboard project is a full-stack web application that allows users
    - Serves as a proxy to fetch weather data from external APIs.
    - Provides city autocomplete functionality.
 
+To facilitate visualization, the project has been deployed and can be accessed at: https://weather-dash-project.netlify.app/
+
 ## Technologies Used
 
 - Frontend:
@@ -68,4 +70,3 @@ To obtain the necessary API keys, visit:
 - Current weather information display
 - Responsive design
 - Error handling and loading states
-
