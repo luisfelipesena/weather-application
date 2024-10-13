@@ -7,13 +7,20 @@ import {
 	CloudFog,
 } from "lucide-react";
 import type { Weather } from "../../../api/weather/types";
+import { UnitSelector } from "../../UnitSelector/UnitSelector";
+import type { TemperatureUnit } from "../../UnitSelector/UnitSelector";
 
 interface WeatherHeadingProps {
 	weather: Weather;
 	unit: "celsius" | "fahrenheit";
+	handleOnUnitChange: (unit: TemperatureUnit) => void;
 }
 
-export const WeatherHeading = ({ weather, unit }: WeatherHeadingProps) => {
+export const WeatherHeading = ({
+	weather,
+	unit,
+	handleOnUnitChange,
+}: WeatherHeadingProps) => {
 	const getWeatherIcon = (condition: string) => {
 		const lowerCondition = condition.toLowerCase();
 		if (lowerCondition.includes("clear") || lowerCondition.includes("sunny"))
@@ -37,6 +44,15 @@ export const WeatherHeading = ({ weather, unit }: WeatherHeadingProps) => {
 
 	return (
 		<div className="text-center">
+			<UnitSelector
+				label="Temperature Unit"
+				unit={unit}
+				options={[
+					{ value: "celsius", label: "°C" },
+					{ value: "fahrenheit", label: "°F" },
+				]}
+				onUnitChange={(unit) => handleOnUnitChange(unit as TemperatureUnit)}
+			/>
 			<h2 className="text-2xl font-semibold text-gray-800">
 				{weather.name}, {weather.region}, {weather.country}
 			</h2>

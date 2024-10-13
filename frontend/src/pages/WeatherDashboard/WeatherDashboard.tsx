@@ -9,17 +9,29 @@ import { WeatherSkeleton } from "../../components/Weather/WeatherSkeleton/Weathe
 import { toast } from "react-toastify";
 import { useWeatherBackground } from "../../hooks/Weather/useWeatherBackground";
 import { useGeolocation } from "@uidotdev/usehooks";
-import { getTemperature, getSpeed, getVisibility } from "../../utils";
-import { UnitSelector } from "../../components/UnitSelector/UnitSelector";
+import {
+	getTemperature,
+	getVisibility,
+	getSpeedLabel,
+	getDirectionLabel,
+} from "../../utils";
+import {
+	type DistanceUnit,
+	type TemperatureUnit,
+	UnitSelector,
+} from "../../components/UnitSelector/UnitSelector";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export const WeatherDashboard = () => {
 	const [city, setCity] = useState("");
 	const [lat, setLat] = useState("");
 	const [lon, setLon] = useState("");
-	const [temperatureUnit, setTemperatureUnit] = useState<
-		"celsius" | "fahrenheit"
-	>("fahrenheit");
-	const [speedUnit, setSpeedUnit] = useState<"km" | "mi">("mi");
+	const [temperatureUnit, setTemperatureUnit] =
+		useLocalStorage<TemperatureUnit>("temperatureUnit", "fahrenheit");
+	const [distanceUnit, setDistanceUnit] = useLocalStorage<DistanceUnit>(
+		"distanceUnit",
+		"mi",
+	);
 
 	const {
 		data: weather,
@@ -27,7 +39,13 @@ export const WeatherDashboard = () => {
 		error: weatherError,
 	} = useWeather({ city, lat, lon });
 	const bgColor = useWeatherBackground(weather?.condition);
-	const { latitude, longitude, error: geolocationError } = useGeolocation();
+	const {
+		latitude,
+		longitude,
+		error: geolocationError,
+	} = useGeolocation({
+		enableHighAccuracy: true,
+	});
 
 	const handleSearch = (searchInput: string) => {
 		setCity(searchInput);
@@ -82,6 +100,9 @@ export const WeatherDashboard = () => {
 						) : (
 							<div className="flex flex-col gap-6">
 								<WeatherHeading
+									handleOnUnitChange={(unit) =>
+										setTemperatureUnit(unit as TemperatureUnit)
+									}
 									weather={{
 										...weather,
 										temperature: Number(
@@ -93,13 +114,16 @@ export const WeatherDashboard = () => {
 									}}
 									unit={temperatureUnit}
 								/>
-
 								<UnitSelector
-									temperatureUnit={temperatureUnit}
-									speedUnit={speedUnit}
-									onTemperatureUnitChange={setTemperatureUnit}
-									onSpeedUnitChange={setSpeedUnit}
+									label="Distance Unit"
+									unit={distanceUnit}
+									options={[
+										{ value: "km", label: "km" },
+										{ value: "mi", label: "mi" },
+									]}
+									onUnitChange={(unit) => setDistanceUnit(unit as DistanceUnit)}
 								/>
+
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 									<WeatherInfoCard
 										icon={<Droplets className="w-6 h-6" />}
@@ -109,15 +133,18 @@ export const WeatherDashboard = () => {
 									<WeatherInfoCard
 										icon={<Wind className="w-6 h-6" />}
 										title="Wind"
-										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${speedUnit}/h - Direction: ${weather.windDirection}`}
+										value={` ${getSpeedLabel(
+											weather.windSpeed.toString(),
+											distanceUnit,
+										)} - ${getDirectionLabel(weather.windDirection)}`}
 									/>
 									<WeatherInfoCard
 										icon={<Eye className="w-6 h-6" />}
 										title="Visibility"
 										value={`${getVisibility(
 											weather.visibility.toString(),
-											speedUnit,
-										)} ${speedUnit}`}
+											distanceUnit,
+										)} ${distanceUnit}/hr`}
 									/>
 									<WeatherInfoCard
 										icon={<Cloud className="w-6 h-6" />}
