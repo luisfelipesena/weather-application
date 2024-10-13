@@ -3,7 +3,7 @@
 This Weather Dashboard project is a full-stack web application that allows users to search for cities and view their current weather conditions. The application consists of two main components:
 
 1. Frontend (React):
-   - City Search Page: Users can search for cities using an autocomplete input field.
+   - City Search: Users can search for cities using an autocomplete input field.
    - Weather Dashboard: Displays detailed weather information for the chosen city.
 
 2. Backend (Node.js):

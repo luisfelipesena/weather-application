@@ -109,7 +109,7 @@ export const WeatherDashboard = () => {
 									<WeatherInfoCard
 										icon={<Wind className="w-6 h-6" />}
 										title="Wind"
-										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${speedUnit}/hr - Direction: ${weather.windDirection}`}
+										value={`${getSpeed(weather.windSpeed.toString(), speedUnit)} ${speedUnit}/h - Direction: ${weather.windDirection}`}
 									/>
 									<WeatherInfoCard
 										icon={<Eye className="w-6 h-6" />}
