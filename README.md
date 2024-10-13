@@ -1,20 +1,26 @@
 # Weather Dashboard Project
 
-## Description
+This Weather Dashboard project is a full-stack web application that allows users to search for cities and view their current weather conditions. The application consists of two main components:
 
-This Weather Dashboard project is a React-based web application that allows users to search for cities and view their current weather conditions. The application consists of two main pages:
+1. Frontend (React):
+   - City Search Page: Users can search for cities using an autocomplete input field.
+   - Weather Dashboard: Displays detailed weather information for the chosen city.
 
-1. City Search Page: Users can search for cities using an autocomplete input field. As they type, the application suggests matching cities.
+2. Backend (Node.js):
+   - Serves as a proxy to fetch weather data from external APIs.
+   - Provides city autocomplete functionality.
 
-2. Weather Dashboard: Once a city is selected, users are redirected to this page where they can view detailed weather information for the chosen city.
+## Technologies Used
 
-The project utilizes modern web technologies and practices, including:
+- Frontend:
+  - React
+  - React Router
+  - React Query
+  - Tailwind CSS
 
-- React for building the user interface
-- React Router for navigation
-- React Query for efficient data fetching and caching
-- Custom hooks for state management and API interactions
-- Tailwind CSS for styling
+- Backend:
+  - Node.js
+  - Express
 
 ## How to Run
 
@@ -22,36 +28,44 @@ To run this project locally, follow these steps:
 
 1. Clone the repository to your local machine.
 
-2. Navigate to the project directory:
+2. Navigate to the project root directory.
+
+3. Install dependencies and start both frontend and backend:
    ```
-   cd weather-dashboard
+   npm run install:all
+   npm run start:all
    ```
 
-3. Install the dependencies:
+   This will install all necessary dependencies and start both the backend and frontend servers.
+
+4. Open your browser and visit `http://localhost:3000` to view the application.
+
+## Environment Variables
+
+Before running the project, make sure to set up the required environment variables:
+
+1. In the `backend/.env` file:
    ```
-   npm install
+   PORT=3001
+   WEATHER_API_KEY=your_weather_api_key
+   API_NINJA_KEY=your_api_ninja_key
    ```
 
-4. Start the development server:
+2. In the `frontend/.env` file:
    ```
-   npm start
+   PORT=3000
+   REACT_APP_API_URL=http://localhost:3001
+   GENERATE_SOURCEMAP=false
    ```
 
-5. Open your browser and visit `http://localhost:3000` to view the application.
-
-## Project Structure
-
-- `src/pages`: Contains the main page components (City Search and Weather Dashboard)
-- `src/components`: Reusable UI components
-- `src/hooks`: Custom React hooks
-- `src/api`: API service functions and related hooks
-- `src/providers`: Context providers (e.g., React Query provider)
+To obtain the necessary API keys, visit:
+- Weather API: https://www.weatherapi.com/docs/
+- API Ninjas: https://api-ninjas.com/
 
 ## Features
 
 - City search with autocomplete
-- Weather information display
+- Current weather information display
 - Responsive design
 - Error handling and loading states
 
-Feel free to explore the code and customize the application to suit your needs!
