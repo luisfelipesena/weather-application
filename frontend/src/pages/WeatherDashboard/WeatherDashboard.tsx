@@ -156,7 +156,7 @@ export const WeatherDashboard = () => {
 										value={`${getVisibility(
 											weather.visibility.toString(),
 											distanceUnit,
-										)} ${distanceUnit}/hr`}
+										)} ${distanceUnit}`}
 									/>
 									<WeatherInfoCard
 										icon={<Cloud className="w-6 h-6" />}
